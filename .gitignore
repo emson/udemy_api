@@ -1,5 +1,6 @@
-settings.py
 .DS_Store
 *.pyc
-.env
+settings.cfg
+libs/
+publish/
 
