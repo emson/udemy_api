@@ -1,4 +1,7 @@
-develop:
+PROJECT = 'udemy_api'
+VIRTUAL_ENV = 'env'
+
+build:
 	@echo "--> Installing dependencies"
 	pip install -r requirements.txt
 	@echo ""
@@ -6,16 +9,25 @@ develop:
 clean:
 	@echo "--> Cleaning pyc files"
 	find . -name "*.pyc" -delete
-	rm -rf ./publish
+	rm -rf ./package
 	@echo ""
 
-publish:
-	rm -rf ./publish/udemy_api_lambda/
-	mkdir -p ./publish/udemy_api_lambda
-	cp -r ./udemy_api ./publish/udemy_api_lambda/
-	# cp -r ./aws_lambda_libs/. ./publish/udemy_api_lambda/
-	cp -r ./udemy_api/config/. ./publish/udemy_api_lambda/udemy_api/config/
-	# cd ./publish/udemy_api_lambda && zip -r ../udemy_api_lambda.zip .
+package:
+	# clean old package dir and zip file
+	rm -rf ./package/*/**
+	# create new package dir and copy files
+	mkdir -p ./package/tmp
+	if test -d $(VIRTUAL_ENV)/lib; then \
+		cp -r ./env/lib/python2.7/site-packages/ ./package/tmp/; \
+	fi
+	if test -d $(VIRTUAL_ENV)/lib64; then \
+		cp -r ./env/lib64/python2.7/site-packages/ ./package/tmp/; \
+	fi
+	cp -r ./$(PROJECT)/ ./package/tmp/
+	# zip up the package
+	cd ./package/tmp && zip -r ../$(PROJECT).zip .
+	# delete the tmp dir
+	rm -rf ./package/tmp
 
-.PHONY: develop clean publish
+.PHONY: build clean package
 

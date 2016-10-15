@@ -3,18 +3,15 @@ FROM python:2.7-slim
 # ENV OPENSSL_VERSION 1.0.1q
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    git  curl && rm -rf /var/lib/apt/lists/*
+    git curl build-essential && rm -rf /var/lib/apt/lists/*
 
-RUN pip install lambda-uploader \
-    && mkdir /data
+RUN mkdir -p /build 
 
-RUN virtualenv /venv && . /venv/bin/activate \
-    && mkdir -p /var/task && cd /var/task \
-    && cd ..
+RUN cd /build && virtualenv ./env && . ./env/bin/activate
 
-WORKDIR /data
+WORKDIR /build
 
-COPY run.sh /run.sh
+# COPY run.sh /run.sh
 
-ENTRYPOINT ["/run.sh"]
+# ENTRYPOINT ["/run.sh"]
 

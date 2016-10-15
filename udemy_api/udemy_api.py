@@ -1,20 +1,24 @@
 """
-.. module: udemy_api.aws_lambda.udemy_api_lambda
+.. module: udemy_api
     :copyright: (c) 2016 by Black Bee Ltd., see AUTHORS for more
     :license: Apache, see LICENSE for more details.
 """
+from __future__ import print_function
 
 import os
-import requests
 import json
 import boto3
+import requests
 
 from config.settings_config import SettingsConfig, UDEMY_SECTION,\
     UDEMY_CLIENT_ID, UDEMY_CLIENT_SECRET, UDEMY_COURSES_URL,\
     AWS_SECTION, AWS_BUCKET
 
 
-def lambda_handler(event=None, context=None):
+print('Loading function...')
+
+
+def lambda_handler(event, context):
     """Main AWS Lambda entry point"""
     aws_bucket   = config().get(AWS_SECTION, AWS_BUCKET)
     courses_url  = config().get(UDEMY_SECTION, UDEMY_COURSES_URL)
@@ -53,8 +57,8 @@ def store(bucket, key, value):
     s3.Bucket(bucket).put_object(Key=key, Body=value)
 
 
-if __name__ == "__main__":
-    print lambda_handler()
+# if __name__ == "__main__":
+#     print lambda_handler()
 
 
 # print s.udemy_secret()
