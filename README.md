@@ -16,14 +16,22 @@ Ensure that you have built the Dockerfile:
 
 ### Virtualenv
 
-Install virtualenv with: 
+Install virtualenv with:
 
     pip install virtualenv
 
 ### Configuration
 
-Rename the `udemy_api/config/settings_example.cfg` file, to `udemy_api/config/settings_example.cfg`.  
+Rename the `udemy_api/config/settings_example.cfg` file, to `udemy_api/config/settings_example.cfg`.
 Edit the `udemy_api/config/settings.cfg` file.
+
+    [Udemy]
+    udemy_courses_url = <INSERT UDEMY URL>
+    udemy_client_id = <INSERT UDEMY API CLIENT ID>
+    udemy_client_secret =<INSERT UDEMY API CLIENT SECRET KEY>
+
+    [AWS]
+    AWS_BUCKET = <INSERT YOUR AWS BUCKET NAME>
 
 ## Running
 
@@ -46,7 +54,8 @@ To build locally create a new virtualenv environment:
 
 ### AWS
 
-Ensure that you have an AWS S3 bucket created. This lambda will write to this
+Ensure that you have an AWS S3 bucket created, with the same name as that
+created in the `settings.cfg` file. This lambda will write to this
 bucket.
 
 On the AWS Lambda service create a new lambda function:
