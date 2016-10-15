@@ -14,11 +14,6 @@ Ensure that you have built the Dockerfile:
 
     build . -t puffinz/lambda-maker
 
-### AWS
-
-Ensure that you have an AWS S3 bucket created. This lambda will write to this
-bucket.
-
 ### Virtualenv
 
 Install virtualenv with: 
@@ -47,6 +42,33 @@ To build locally create a new virtualenv environment:
 
     virtualenv ./env &&  . ./env/bin/activate
     make clean build package
+    deactivate
+
+### AWS
+
+Ensure that you have an AWS S3 bucket created. This lambda will write to this
+bucket.
+
+On the AWS Lambda service create a new lambda function:
+
+1. Click the "Create a Lambda function" button
+2. Select the "Blank Function" blueprint
+3. Click "Next" (no triggers)
+4. Name "UdemyApi"
+5. Runtime "Python 2.7"
+6. Code entry type "Upload .ZIP file"
+7. Click the "Upload" button and select the .zip file from the `package`
+   directory
+8. Handler should be "udemy_api.lambda_handler"
+9. Role "Choose an existing role"
+10. Existing role "<ENSURE YOU HAVE CREATED A ROLE>"
+11. Set Timeout to about "15" seconds
+12. Click "Next" and then "Create Function"
+13. Click the "Test" button
+14. Use the Sample event template "Hello World"
+15. Finally click the "Save and Test" button
+
+
 
 
 # TODO
