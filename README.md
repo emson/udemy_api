@@ -8,14 +8,6 @@ This project uses Docker to build the AWS lambda against Python 2.7.
 
 Ensure that you have the following installed:
 
-### Virtualenv
-
-Install virtualenv with: 
-
-    pip install virtualenv
-    # from your project directory:
-    virtualenv ./env &&  . ./env/bin/activate
-
 ### Docker
 
 Ensure that you have built the Dockerfile:
@@ -26,6 +18,12 @@ Ensure that you have built the Dockerfile:
 
 Ensure that you have an AWS S3 bucket created. This lambda will write to this
 bucket.
+
+### Virtualenv
+
+Install virtualenv with: 
+
+    pip install virtualenv
 
 ### Configuration
 
