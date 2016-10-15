@@ -1,3 +1,7 @@
+# Makefile to build an AWS Lambda
+#
+# http://makefiletutorial.com/
+
 PROJECT = 'udemy_api'
 VIRTUAL_ENV = 'env'
 
@@ -12,22 +16,22 @@ clean:
 	rm -rf ./package
 	@echo ""
 
+.PHONY: clean
+
 package:
 	# clean old package dir and zip file
 	rm -rf ./package/*/**
 	# create new package dir and copy files
 	mkdir -p ./package/tmp
 	if test -d $(VIRTUAL_ENV)/lib; then \
-		cp -r ./env/lib/python2.7/site-packages/ ./package/tmp/; \
+		cp -a ./env/lib/python2.7/site-packages/. ./package/tmp/; \
 	fi
 	if test -d $(VIRTUAL_ENV)/lib64; then \
-		cp -r ./env/lib64/python2.7/site-packages/ ./package/tmp/; \
+		cp -a ./env/lib64/python2.7/site-packages/. ./package/tmp/; \
 	fi
-	cp -r ./$(PROJECT)/ ./package/tmp/
+	cp -a ./$(PROJECT)/. ./package/tmp/
 	# zip up the package
 	cd ./package/tmp && zip -r ../$(PROJECT).zip .
 	# delete the tmp dir
 	rm -rf ./package/tmp
-
-.PHONY: build clean package
 
