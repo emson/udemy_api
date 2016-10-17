@@ -1,7 +1,5 @@
 FROM alpine:latest
 
-# ENV OPENSSL_VERSION 1.0.1q
-
 RUN set -e && \
     set -x && \
     apk add --no-cache --virtual build-deps \
@@ -25,6 +23,3 @@ WORKDIR /build
 VOLUME ["/build"]
 CMD ["/bin/sh", "-c", "rm -rf ./env; virtualenv ./env; . ./env/bin/activate; make clean build package"]
 
-# COPY run.sh /run.sh
-
-# ENTRYPOINT ["/run.sh"]
