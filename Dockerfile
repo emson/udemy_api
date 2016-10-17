@@ -14,7 +14,8 @@ RUN set -e && \
         pkgconf \
         unzip \
         build-base \
-        zlib-dev && \
+        zlib-dev \
+        zip && \
     python -m ensurepip && \
     pip --no-cache-dir install --upgrade pip setuptools && \
     mkdir -p /build && \
