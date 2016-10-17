@@ -1,21 +1,30 @@
-FROM python:2.7-slim
+FROM alpine:latest
 
 # ENV OPENSSL_VERSION 1.0.1q
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
-    git curl build-essential zip && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p /build
-
-RUN pip install virtualenv
-
-RUN cd /build && virtualenv ./env && . ./env/bin/activate
+RUN set -e && \
+    set -x && \
+    apk add --no-cache --virtual build-deps \
+        gcc \
+        git \
+        python-dev \
+        linux-headers \
+        curl \
+        cmake \
+        pkgconf \
+        unzip \
+        build-base \
+        zlib-dev \
+        zip && \
+    python -m ensurepip && \
+    pip --no-cache-dir install --upgrade pip setuptools && \
+    mkdir -p /build && \
+    pip install virtualenv
 
 WORKDIR /build
-
-CMD make clean build package
+VOLUME ["/build"]
+CMD ["/bin/sh", "-c", "rm -rf ./env; virtualenv ./env; . ./env/bin/activate; make clean build package"]
 
 # COPY run.sh /run.sh
 
 # ENTRYPOINT ["/run.sh"]
-
