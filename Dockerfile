@@ -20,6 +20,11 @@ RUN set -e && \
     pip install virtualenv
 
 WORKDIR /build
+
+RUN virtualenv /venv; . /venv/bin/activate
+
 VOLUME ["/build"]
-CMD ["/bin/sh", "-c", "rm -rf ./env; virtualenv ./env; . ./env/bin/activate; make clean build package"]
+CMD make VIRTUAL_ENV=/venv
+
+# CMD ["/bin/sh", "-c", "rm -rf ./env; virtualenv ./env; . ./env/bin/activate; make VIRTUALENV=/venv"]
 
